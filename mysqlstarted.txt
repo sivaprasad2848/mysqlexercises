@@ -161,12 +161,66 @@ create table contact(slno int not null unique,
 
 
 
-	
-	
-
 	4)Views
+
+	Views are used for selecting records from same or multiple tables
+
+	and also used to implement security.
+	
+	Syntax:
+
+		create view <viewname> as <select stmt>;
+
+	Eg:
+		create view book_view1 as select bid,title form books;
+ 
+
 	5)Procedures
+		Used for implementing business logic.
+
+	Syntax:
+
+	create procedure <procedure-name>(args)
+	begin
+		your code
+	end
+	Eg:
+
+	delimiter //
+	create procedure oddeven(IN num int)
+	begin
+	if num % 2 = 0 
+	then
+	select "Even";
+	else
+	select "Odd";
+	end if;
+	end;
+
+	call <procedurename>(args);
+
+
+
+create procedure insert_contact(IN sl int,IN na varchar(100),IN em varchar(100),
+	mob bigint)
+begin
+insert into contact(slno,name,email,mobile) values(sl,na,em,mob);
+end
+
+
+
+
+call insert_contact(1,'sam','sam@gmail.com',72388787);
+
+
+
+		
+
 	6)Functions
+
+
+
+
 	7)Triggers
 	8)Events
 	9)Cursor
