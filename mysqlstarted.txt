@@ -1,0 +1,488 @@
+SQL
+---------------------
+	Database Objects
+	-----------------
+	1)User
+		Creating a new user in mySQL
+		Syntax:
+		
+create user '<user-name>'@'<machine-name/ip>' identified by 'password';	
+		
+		localhost
+		%
+		IP
+
+Eg:
+create user 'hitman2'@'localhost' identified by 'asd123#';
+create user 'cybersquare'@'localhost' identified by 'asd123#';
+create user 'alpine'@'localhost' identified by 'asd123#';
+
+
+
+Removing a user from DB server
+------------------------------------
+Syntax:
+
+	drop user '<user-name>'@'<machine-name/ip>';
+
+	Eg:
+
+	drop user 'hitman2'@'localhost';
+	drop user 'alpine'@'localhost';
+
+
+
+	2)Database
+		Is the area where database object are kept for a project.
+
+		Syntax:
+			create database <db-name>;
+
+		Eg:
+			create database db1001;
+		
+
+			drop database <db-name>;
+
+
+			drop database db1001;
+
+
+	3)Tables/Relations
+		The data are stored in tables
+
+		How to create a table
+	Syntax:
+create table <table-name>(<field-name> <data-type> [spec],
+<field-name> <data-type> [spec],...)
+
+Datatypes:
+
+	These are used for setting the types of data that you are
+	going to store in table.
+	
+	1) Numeric
+		->bit
+		->tinyint
+		->smallint
+		->int
+		->bigint
+		->float
+		->double
+		->decimal
+
+
+	2) String
+		->char
+		->varchar
+		->tinytext
+		->mediumtext
+		->text
+		->blob(binary large object)
+		->json
+	3) Date
+		->date (yyyy-mm-dd)
+		->time(hh:ii:ss)
+		->datetime(yyyy-mm-dd hh:ii:ss)
+		->timestamp(number)
+
+	4) User Defined
+		->enum
+		->set
+	
+create table bus_details(slno int,bus_name varchar(155),reg_no varchar(155));
+
+desc <table-name>;:- Will display all fields of that table
+
+Normalization Rules
+----------------------
+These are the rules used for creating tables in a professional way.
+So that tables can answer your quesries.
+
+	
+1NF
+	1)No Empty Fields
+		You can set 'default value'
+		You Can set 'not null'
+
+	2)Atomicity
+				
+	3) There should a key column to identify each and every record in table.
+
+
+create table contact(slno int not null unique,
+	name varchar(100) not null,
+	email varchar(100) default 'no-email',
+	mobile bigint not null);
+
+2ND Normal Form
+--------------------
+	1)Table must be in first normal form
+	2)Avoid Partial Dependency
+
+	slno,book_title,book_price,published_date,category,author_ref(FK)
+
+	aid(PK),author_name,author_penname,author_email,author_mobile
+
+	create table author(aid int not null auto_increment primary key,
+	auth_name varchar(100) not null,auth_email varchar(100) default 'no-email',
+	auth_mobile bigint not null);
+	
+	create table books(bid int not null auto_increment primary key,
+	title varchar(100) not null,price decimal(10,5),auth_ref int,
+	foreign key(auth_ref) references author(aid));
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	
+
+	4)Views
+	5)Procedures
+	6)Functions
+	7)Triggers
+	8)Events
+	9)Cursor
+	10)Prepared Statements
+
+SQL
+---------------------
+->DDL(Data Definition Language)
+	Used to define the DBO
+	->create:- Used for creating new DBO
+
+		Syntax:
+		create <dbo-name> <name> [spec];
+
+	->drop :- Used for removing an existing DBO
+	->alter :- Used to change the structure of a DBO
+	->rename :- Used for renaming the DBO
+	->truncate :- Used for removing all data from a table
+
+->DML(Data Manipulation Language)
+	
+	Data related operations
+
+	->insert:- Used for creating new records(tuples)
+		Syntax:
+
+		insert into <table-name>(<field1>,<field2>,<field3>,...)
+		values(<value1>,<value2>...);
+	
+		insert into contact(slno,name,email,mobile) 
+		values(4,'pranav','pranav@gmail.com',9562212977),
+		(5,'sravan','sravan@gmail.com',9562212266);
+
+
+
+	
+
+	->select :-Used for selecting records
+		Syntax:
+
+		select <field1>,<field2>,<field3>... from <table-name>;
+		select *from <table-name>;
+
+	Column Alias
+
+	Applying Conditions in selections
+
+	where clause
+	-------------
+		operators
+		
+		1)relational (<,>,<=,>=,=,!=)
+		
+		2)Logical (and,or,not)
+		
+		select *from contact where slno>2 and slno<5;
+
+		3)like:- Used for pattern checking
+		
+	select *from contact where email like 's%';
+	select *from contact where name like '%n';
+	select *from contact where name like '%wi%';
+
+	->limit: Used for limiting the selection
+		
+	->Aggragate Functions
+		count():- To get the total records in table
+		select count(*) from contact;
+		max():- To get the largest value in a column
+		select max(slno) from contact;
+		min():- To get minimum value in column
+		select min(slno) from contact;
+		avg():- To get Average of a column
+		select avg(slno) from contact;
+		sum():- To get the sum of values in a column
+		select sum(slno) from contact;
+		
+	->between
+		select *from contact where slno between 2 and 5;
+
+	->order by
+	---------------
+
+	sorting purpose
+
+	select *from contact order by slno desc;
+
+
+	-> group by
+	------------
+	CREATE TABLE orders (
+    order_id INT PRIMARY KEY,
+    customer_name VARCHAR(100),
+    product VARCHAR(100),
+    quantity INT,
+    price DECIMAL(10,2),
+    order_date DATE
+);
+INSERT INTO orders (order_id, customer_name, product, quantity, price, order_date) VALUES
+(1, 'Rahul', 'Laptop', 1, 55000, '2025-01-05'),
+(2, 'Anjali', 'Mobile', 2, 15000, '2025-01-06'),
+(3, 'Rahul', 'Mouse', 3, 500, '2025-01-06'),
+(4, 'Vikram', 'Keyboard', 1, 1200, '2025-01-07'),
+(5, 'Anjali', 'Laptop', 1, 56000, '2025-01-07'),
+(6, 'Priya', 'Mobile', 1, 14500, '2025-01-08'),
+(7, 'Rahul', 'Headphones', 2, 2000, '2025-01-08'),
+(8, 'Vikram', 'Laptop', 1, 54000, '2025-01-09'),
+(9, 'Priya', 'Mouse', 1, 500, '2025-01-09'),
+(10, 'Kiran', 'Laptop', 2, 55000, '2025-01-10'),
+(11, 'Kiran', 'Keyboard', 1, 1200, '2025-01-10'),
+(12, 'Anjali', 'Mouse', 2, 500, '2025-01-11'),
+(13, 'Vikram', 'Mobile', 1, 15000, '2025-01-12'),
+(14, 'Rahul', 'Laptop', 1, 53000, '2025-01-12'),
+(15, 'Priya', 'Keyboard', 2, 1200, '2025-01-12'),
+(16, 'Rahul', 'Mobile', 1, 15000, '2025-01-13'),
+(17, 'Anjali', 'Headphones', 1, 2000, '2025-01-13'),
+(18, 'Kiran', 'Mobile', 2, 14000, '2025-01-14'),
+(19, 'Priya', 'Lapto
+p', 1, 55000, '2025-01-14'),
+(20, 'Vikram', 'Mouse', 1, 500, '2025-01-15');
+
+
+SELECT customer_name, SUM(quantity) AS total_items
+FROM orders
+GROUP BY customer_name ;
+
+
+	->having 
+	Used for implementing  conditions on group by selection
+ 
+	SELECT customer_name, SUM(quantity) AS total_items
+	FROM orders
+	GROUP BY customer_name having customer_name='Kiran';
+
+	->in
+	Used to specify a set/group
+
+	select *from orders where order_id in(10,11,12,13,14,15);
+
+
+	->Subquery
+	
+	select *from orders where order_id in(select order_id from orders where
+	order_id >=10 and order_id<=15);
+
+
+
+	->update :- Used for updating records
+	Used to updating existing records
+	Syntax:
+		update <table-name> set <fieldname>=<value>,<filedname>=<value>,...
+		where <condition>;
+
+	Eg:
+
+	update contact set name='samzero',mobile=9008007001 where slno=1;
+
+	update contact set mobile=9000000000;
+
+	->delete:- Used for removing existing records
+	Syntax:
+
+	delete from <table-name> where <condition>;
+
+	delete from contacts where slno=1;
+	delete from contacts;
+
+create table author(aid int not null auto_increment primary key,
+	auth_name varchar(100) not null,auth_email varchar(100) default 'no-email',
+	auth_mobile bigint not null);
+	
+	create table books(bid int not null auto_increment primary key,
+	title varchar(100) not null,price decimal(10,5),auth_ref int,
+	foreign key(auth_ref) references author(aid));
+
+INSERT INTO author (auth_name, auth_email, auth_mobile) VALUES
+('Rahul Menon', 'rahul.menon@example.com', 9876501234),
+('Anjali Sharma', 'anjali.sharma@example.com', 9876512345),
+('Vikram Das', 'vikram.das@example.com', 9876523456),
+('Priya Varma', 'priya.varma@example.com', 9876534567),
+('Kiran Joseph', 'kiran.joseph@example.com', 9876545678),
+('Sneha Pillai', 'sneha.pillai@example.com', 9876556789),
+('Arun Mathew', 'arun.mathew@example.com', 9876567890),
+('Lakshmi Nair', 'lakshmi.nair@example.com', 9876578901),
+('Manoj Kumar', 'manoj.kumar@example.com', 9876589012),
+('Revathi S', 'revathi.s@example.com', 9876590123);
+
+select books.title,author.auth_name 
+from books,author where books.auth_ref=author.aid;
+
+insert into books(title,price) values('Rich Dad Poor Dad',250.00);
+INSERT INTO author (auth_name, auth_mobile) VALUES
+('Tolstoy',999999999);
+Joins
+-----------------------
+	They are used for selecting data from mutiple tables.
+
+	->inner join
+		
+	Syntax:
+
+		select table1.field1,table1.field2,...,table2.field1,table2.field2,..
+		from table1 inner join table2 on <condition>;
+
+	Eg:
+
+	select books.title,author.auth_name 
+	from books inner join author on books.auth_ref=author.aid;
+
+	->left join
+	
+	select books.title,author.auth_name 
+	from books left join author on books.auth_ref=author.aid;
+
+	->right join
+	select books.title,author.auth_name 
+	from books right join author on books.auth_ref=author.aid;
+
+	->outer join
+
+(select books.title,author.auth_name 
+	from books left join author on books.auth_ref=author.aid) union 
+(select books.title,author.auth_name 
+	from books right join author on books.auth_ref=author.aid);
+
+
+	->self join
+
+	is a type of inner join which select data from same table
+
+	create table employees(empid int not null auto_increment primary key,
+	name varchar(100) not null,tlid int);
+
+	insert into employees(name,tlid) values('Ananya',0),
+	('Anil',1),('Adil',1),('Anagha',1),('Ahuja',0),('Anju',5),('Akshara',5);
+	
+	select a.name,b.name from employees as a inner join employees as b
+	on a.tlid=b.empid;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
+
+	
+
+->DCL (Data Controlling Language)
+	Used for security purpose
+
+	->grant:- To set a permission
+
+	Syntax:
+
+grant <privilege type> privileges on <db-name>.<table-name> to 
+'<user-name>'@'<machine-name/ip>';
+
+Eg:
+grant all privileges on *.* to 'cybersquare'@'localhost';
+grant all privileges on *.* to 'alpine'@'localhost';
+
+
+	->revoke:- To reset a permission
+
+revoke <privilege type> privileges on <db-name>.<table-name> from 
+'<user-name>'@'<machine-name.ip>';
+	
+Eg:
+
+revoke all privileges on *.* from 'cybersquare'@'localhost';
+revoke all privileges on *.* from 'alpine'@'localhost';
+
+
+->TCL (Transaction Controlling Language)
+	Batch operations execution
+	->commit: To set a batch operation
+	->rollback :- To reset a batch operation
+
+
+create a database challenger
+
+	create database challenger;
+
+create a user challeger_user in server
+
+	create user 'challenger_user'@'localhost' identified by 'asd123#';
+
+provide all privileges to that user for challeger database.
+
+	grant all privileges on challenger.* to 'challeger_user'@'localhost';
+
+
+
+
