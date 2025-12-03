@@ -1,0 +1,128 @@
+USERS & DATABASES (5 Exercises)
+
+1)Create users user1, user2, user3 with password test123#, accessible from localhost.
+2)Remove the user user2 from the MySQL server.
+3)Create a two databases named: training_db1,training_db2.
+4)Drop database training_db2;
+5)Create permission for the user1 to access database training_db1
+6)Create a database training_db3
+7)Create permission for the user1 to access database training_db3
+8)Create permission for the user3 to access database training_db3
+9)revoke the permission of user1 for accessing the database training_db3
+10)Basic Inventory Management System (Database Design)
+Design and create a database for an Inventory System using MySQL
+
+Tables Need to create 
+10.a)
+	TableName: items
+	Stores all products in inventory.
+	
+	Requirements / Hints:
+
+	->Item must have a unique ID
+
+	->Each item must have a name
+
+	->Should store purchase price and selling price
+
+	->Should store the category name
+
+	->Should not allow empty fields for name or category
+
+	->Price fields must allow decimals
+
+10.b)
+	Table: stock
+
+	Maintains current quantity of each item.
+	
+	Requirements / Hints:
+
+	->Each stock row must refer to an item (foreign key)
+
+	->Must store current quantity
+
+	->Quantity must not be negative
+
+	->Should store the date when stock was last updated
+
+		(Hint: Use foreign key(item_id) referencing items(item_id))
+
+10.c)
+	Table: transactions
+
+	Stores all stock movements.
+
+	Requirements / Hints:
+
+	->Each transaction must have an ID
+
+	->Must refer to which item was added/removed (foreign key)
+
+	->Must store:
+
+		->quantity
+
+		->transaction type (IN or OUT) → Hint: Use ENUM
+
+		->date
+
+	->Quantity must be positive
+
+	->Students should think about setting default date using now()
+
+11)Insert Sample Data 20 records for each table
+
+12)Perform Select Operations
+	->Select all items
+
+	->Select items with selling price > 1000
+
+	->Select items belonging to category “Electronics”
+
+13)Join Queries
+
+	->Show each item with its current stock
+
+	->Show each transaction with item name
+
+	(Hint: Use inner join stock on items.item_id = stock.item_id)
+
+14)Aggregate Queries
+
+	->Find total stock value
+	Hint: sum(quantity * purchase_price)
+
+	->Find total items in category-wise grouping
+	Hint: Use group by
+
+	->Show items that have stock less than 10
+
+15)Views
+Task 7 — Create a view
+
+	Create a view named item_overview that shows:
+
+		->item name
+
+		->category
+
+		->purchase price
+
+		->selling price
+
+		->current stock quantity
+
+16)PART 6: Stored Procedure
+	Task 8 — Write a procedure add_stock(item_id, qty)
+
+	The procedure must:
+
+		->insert a new IN transaction
+
+		->increase the stock quantity
+
+		(Hint: Use update stock set quantity = quantity + qty where item_id = ...)
+
+
+
