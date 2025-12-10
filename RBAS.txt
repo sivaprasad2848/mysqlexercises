@@ -1,0 +1,45 @@
+Role Based Authentication System Using SQL(RBAS)
+-----------------------------------------------
+Tables:
+	1)Users
+		->userid(AI PK)
+		->username varchar(100) NN unique
+		->password text Must Encrypted
+		->status enum('enabled','suspended')
+		->email_verification_status enum('verified','pending')
+		->mobile_verification_status enum('verified','pending')
+		->refresh_token text
+		->token_life_time datetime
+		->otp_for_verification int
+		->top_created_datetime datetime
+		->otp_valid_for_minutes int
+	2)Profile
+		->profileid AI PK
+		->userid (foreign key references users(userid))
+		->email varchar(150) unique
+		->mobile bigint unique		
+		->profile_image text
+		->dob date
+		->linked_in_url
+		->git_url
+		->fb_url
+		->twitter_url
+		->career_title
+		->skills text
+
+	3)Roles
+		->roleid int AI PK NN
+		->rolename varchar(50) unique
+		->status enum('enabled','disbaled')
+	4)Modules
+		->moduleid PK NN AI
+		->module_title varchar(100)
+		->role_id int (FK references roles(roleid))
+		->access_code enum('yes','no')
+
+	5)contacts
+		->contact_id int AI PK
+		->contact_name varchar(100) nn
+		->contact_email  varchar(100)
+		->contact_mobile varchar(100)
+		->contact_record_owner int (foreign key references users(userid) )
